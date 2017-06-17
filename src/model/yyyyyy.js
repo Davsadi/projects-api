@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
-import FoodTruck from './foodtruck';
+import XXXXXX from './xxxxxx';
 let Schema = mongoose.Schema;
 
-let ReviewSchema = new Schema({
+let YYYYYYSchema = new Schema({
     title: {
         type: String,
         required: true
     },
     text: String,
-    foodtruck: {
+    xxxxxx: {
         type: Schema.Types.ObjectId,
-        ref: 'FoodTruck',
+        ref: 'XXXXXX',
         required: true
     }
 });
 
-module.exports = mongoose.model('Review', ReviewSchema);
+module.exports = mongoose.model('YYYYYY', YYYYYYSchema);

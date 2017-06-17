@@ -3,6 +3,8 @@ import { Router } from 'express';
 import Client from '../model/client';
 import Project from '../model/project';
 import Stakeholder from '../model/stakeholder';
+import Task from '../model/task';
+import Action from '../model/action';
 
 import { authenticate } from '../middleware/authMiddleware';
 
@@ -137,6 +139,90 @@ export default({ config, db }) => {
             res.json(projects);
         });
     });
+
+
+// Add task for specific project
+// '/v1/client/project/task/add/:id'
+api.post('/projects/task/add/:id', authenticate, (req, res) => {
+    Project.findById(req.params.id, (err, project) => {
+        if (err) {
+            res.send(err);
+        }
+        let newTask = new Task();
+
+        newTask.name = req.body.name;
+        newTask.role = req.body.role;
+
+        newTask.project = project._id;
+        newTask.save((err, project) => {
+            if (err) {
+                res.send(err);
+            }
+            project.tasks.push(newTask);
+            client.save(err => {
+                if (err) {
+                    res.send(err);
+                }
+                res.json({ message: "Project Task saved!"});
+            });
+        });
+    });
+});
+
+
+// Get all tasks for a specific project ID
+// '/v1/client/project/task/:id'
+api.get('/projects/task/:id', (req, res) => {
+    Task.find({client: req.params.id}, (err, tasks) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(tasks);
+    });
+});
+
+
+// Add action for specific task
+// '/v1/client/project/task/action/add/:id'
+api.post('/projects/task/action/add/:id', authenticate, (req, res) => {
+    Task.findById(req.params.id, (err, task) => {
+        if (err) {
+            res.send(err);
+        }
+        let newAction = new Action();
+
+        newAction.name = req.body.name;
+        newTask.role = req.body.role;
+
+        newTask.project = project._id;
+        newTask.save((err, project) => {
+            if (err) {
+                res.send(err);
+            }
+            project.tasks.push(newTask);
+            client.save(err => {
+                if (err) {
+                    res.send(err);
+                }
+                res.json({ message: "Project Task saved!"});
+            });
+        });
+    });
+});
+
+
+// Get all actions for a specific task ID
+// '/v1/client/project/task/action/:id'
+api.get('/projects/task/:id', (req, res) => {
+    Task.find({client: req.params.id}, (err, tasks) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(tasks);
+    });
+});
+
+
 
     return api;
 }

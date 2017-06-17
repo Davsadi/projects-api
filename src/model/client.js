@@ -7,6 +7,8 @@ let ClientSchema = new Schema({
         type: String,
         required: true
     },
+    logo: String,
+    description: String,
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 });
 

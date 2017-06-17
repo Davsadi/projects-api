@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Router } from 'express';
 import Client from '../model/client';
 import Project from '../model/project';
+import Stakeholder from '../model/stakeholder';
 
 import { authenticate } from '../middleware/authMiddleware';
 
@@ -14,7 +15,8 @@ export default({ config, db }) => {
     api.post('/add', authenticate, (req, res) => {
         let newClient = new Client();
         newClient.name = req.body.name;
-
+        newClient.logo = req.body.logo;
+        newClient.description = req.body.description;
         newClient.save(err => {
             if (err) {
                 res.send(err);
@@ -52,7 +54,8 @@ export default({ config, db }) => {
                 res.send(err);
             }
             client.name = req.body.name;
-
+            client.logo = req.body.logo;
+            client.description = req.body.description;
             client.save(err => {
                 if (err) {
                     res.send(err);
@@ -103,7 +106,9 @@ export default({ config, db }) => {
             }
             let newProject = new Project();
 
-            newProject.title = req.body.title;
+            newProject.name = req.body.name;
+            newProject.sow = req.body.sow;
+            newProject.startDate = new Date(req.body.startDate);
 
             newProject.client = client._id;
             newProject.save((err, project) => {

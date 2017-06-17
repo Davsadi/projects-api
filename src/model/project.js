@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
-import XXXXXX from './xxxxxx';
+import Client from './client';
 let Schema = mongoose.Schema;
 
-let YYYYYYSchema = new Schema({
+let ProjectSchema = new Schema({
     title: {
         type: String,
         required: true
     },
     text: String,
-    xxxxxx: {
+    client: {
         type: Schema.Types.ObjectId,
-        ref: 'XXXXXX',
+        ref: 'Client',
         required: true
     }
 });
 
-module.exports = mongoose.model('YYYYYY', YYYYYYSchema);
+module.exports = mongoose.model('Project', ProjectSchema);

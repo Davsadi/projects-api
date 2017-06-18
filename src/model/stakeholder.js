@@ -11,6 +11,7 @@ let StakeholderSchema = new Schema({
     role: String,
     image: String,
     actions: [{ type: Schema.Types.ObjectId, ref: 'Action'}],
+    archive: { type: Boolean, default: false },
     project: {
         type: Schema.Types.ObjectId,
         ref: 'Project',

@@ -9,6 +9,7 @@ let noteSchema = new Schema({
     },
     addDate: Date,
     tag: [ String ],
+    archive: { type: Boolean, default: false },
     action: {
         type: Schema.Types.ObjectId,
         ref: 'Action',

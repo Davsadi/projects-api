@@ -13,6 +13,7 @@ let actionSchema = new Schema({
     addDate: Date,
     dueDate: Date,
     status: String,
+    archive: { type: Boolean, default: false },
     dependency: [{ type: Schema.Types.ObjectId, ref: 'Action'}],
     image: [ {
         url: String,
@@ -30,8 +31,7 @@ let actionSchema = new Schema({
     },
     stakeholder: {
         type: Schema.Types.ObjectId,
-        ref: 'Stakeholder',
-        required: true
+        ref: 'Stakeholder'
     }
 });
 

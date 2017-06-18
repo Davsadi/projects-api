@@ -58,6 +58,7 @@ export default({ config, db }) => {
             client.name = req.body.name;
             client.logo = req.body.logo;
             client.description = req.body.description;
+            client.archive = req.body.archive;
             client.save(err => {
                 if (err) {
                     res.send(err);
@@ -96,132 +97,6 @@ export default({ config, db }) => {
                 });
             });
         });
-
-
-
-    // Add project for specific client
-    // '/v1/client/project/add/:id'
-    api.post('/projects/add/:id', authenticate, (req, res) => {
-        Client.findById(req.params.id, (err, client) => {
-            if (err) {
-                res.send(err);
-            }
-            let newProject = new Project();
-
-            newProject.name = req.body.name;
-            newProject.sow = req.body.sow;
-            newProject.startDate = new Date(req.body.startDate);
-
-            newProject.client = client._id;
-            newProject.save((err, project) => {
-                if (err) {
-                    res.send(err);
-                }
-                client.projects.push(newProject);
-                client.save(err => {
-                    if (err) {
-                        res.send(err);
-                    }
-                    res.json({ message: "Client Project saved!"});
-                });
-            });
-        });
-    });
-
-
-    // Get all projects for a specific client ID
-    // '/v1/client/project/:id'
-    api.get('/projects/:id', (req, res) => {
-        Project.find({client: req.params.id}, (err, projects) => {
-            if (err) {
-                res.send(err);
-            }
-            res.json(projects);
-        });
-    });
-
-
-// Add task for specific project
-// '/v1/client/project/task/add/:id'
-api.post('/projects/task/add/:id', authenticate, (req, res) => {
-    Project.findById(req.params.id, (err, project) => {
-        if (err) {
-            res.send(err);
-        }
-        let newTask = new Task();
-
-        newTask.name = req.body.name;
-        newTask.role = req.body.role;
-
-        newTask.project = project._id;
-        newTask.save((err, project) => {
-            if (err) {
-                res.send(err);
-            }
-            project.tasks.push(newTask);
-            client.save(err => {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({ message: "Project Task saved!"});
-            });
-        });
-    });
-});
-
-
-// Get all tasks for a specific project ID
-// '/v1/client/project/task/:id'
-api.get('/projects/task/:id', (req, res) => {
-    Task.find({client: req.params.id}, (err, tasks) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json(tasks);
-    });
-});
-
-
-// Add action for specific task
-// '/v1/client/project/task/action/add/:id'
-api.post('/projects/task/action/add/:id', authenticate, (req, res) => {
-    Task.findById(req.params.id, (err, task) => {
-        if (err) {
-            res.send(err);
-        }
-        let newAction = new Action();
-
-        newAction.name = req.body.name;
-        newTask.role = req.body.role;
-
-        newTask.project = project._id;
-        newTask.save((err, project) => {
-            if (err) {
-                res.send(err);
-            }
-            project.tasks.push(newTask);
-            client.save(err => {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({ message: "Project Task saved!"});
-            });
-        });
-    });
-});
-
-
-// Get all actions for a specific task ID
-// '/v1/client/project/task/action/:id'
-api.get('/projects/task/:id', (req, res) => {
-    Task.find({client: req.params.id}, (err, tasks) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json(tasks);
-    });
-});
-
 
 
     return api;

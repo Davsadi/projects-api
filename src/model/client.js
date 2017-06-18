@@ -9,6 +9,7 @@ let ClientSchema = new Schema({
     },
     logo: String,
     description: String,
+    archive: { type: Boolean, default: false },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project'}]
 });
 

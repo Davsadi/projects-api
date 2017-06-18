@@ -8,8 +8,10 @@ let taskSchema = new Schema({
         type: String,
         required: true
     },
-    role: String,
+    detail: String,
+    dueDate: Date,
     actions: [{ type: Schema.Types.ObjectId, ref: 'Action'}],
+    archive: { type: Boolean, default: false },
     project: {
         type: Schema.Types.ObjectId,
         ref: 'Project',

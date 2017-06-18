@@ -11,6 +11,7 @@ let ProjectSchema = new Schema({
     },
     sow: String,
     startDate: Date,
+    archive: { type: Boolean, default: false },
     stakeholders: [{ type: Schema.Types.ObjectId, ref: 'Stakeholder'}],
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Task'}],
     client: {
